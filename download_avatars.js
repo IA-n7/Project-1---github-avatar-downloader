@@ -12,7 +12,7 @@ function getRepoContributors(repoOwner, repoName, cb) {
     }
   };
 
-  request(url, function(err, res, body) {
+  request(options.url, function(err, res, body) {
     cb(err, body);
   });
 }
