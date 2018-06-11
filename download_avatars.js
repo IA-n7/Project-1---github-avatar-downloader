@@ -13,6 +13,7 @@ function getRepoContributors(repoOwner, repoName, cb) {
   };
 
   request(options.url, function(err, res, body) {
+    JSON.parse(body);
     cb(err, body);
   });
 }
@@ -21,3 +22,6 @@ function getRepoContributors(repoOwner, repoName, cb) {
   console.log("Errors:", err);
   console.log("Result:", result);
 });
+
+
+  // if (!error && response.statusCod ==)
