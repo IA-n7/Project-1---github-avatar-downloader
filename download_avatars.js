@@ -1,11 +1,9 @@
-
-var owner = process.argv[2];
-var repo = process.argv[3];
-
-
 var request = require('request');
 var githubToken = require("./secrets.js");
 var fs = require('fs');
+
+var owner = process.argv[2];
+var repo = process.argv[3];
 
 console.log('Welcome to the GitHub Avatar Downloader!');
 
@@ -17,21 +15,17 @@ function getRepoContributors(repoOwner, repoName, cb) {
       'Authorization': "token " + githubToken.GITHUB_TOKEN
     }
   };
-
   request(options, function(err, res, body) {
     var data = JSON.parse(body);
     cb(err, data);
   });
 }
 
-
 function downloadImageByURL(url, filePath) {
-
   request.get(url)
      .on('error', function (err) {
        throw err; 
      })
-
      .on('response', function (response) {
        console.log("Downloading image: ");
      })
@@ -49,7 +43,11 @@ function callback (err, result) {
     downloadImageByURL(result[i]["avatar_url"], "./avatars/" + result[i]["login"]);
   }
   console.log("Errors: ", err);
-
 }
 
+if ((owner === undefined) || (repo === undefined)) {
+  console.log("Please enter a Repository owner name and Repository name");
+} else {
   getRepoContributors(owner, repo, callback);
+}
+
